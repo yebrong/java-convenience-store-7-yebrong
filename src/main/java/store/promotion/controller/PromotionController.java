@@ -19,10 +19,9 @@ public class PromotionController {
 
         if (count > 0 && "Y".equals(InputView.infoPromotion(cartItem.getProduct(), count))) {
             if (promotionService.addFreeProduct(cartItem, promotion)) {
-                return count; // 멤버십 여부로 넘어가도록 여기서 바로 반환
+                return count;
             }
         }
-
         return 0;
     }
 }

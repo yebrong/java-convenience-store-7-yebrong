@@ -1,6 +1,5 @@
 package store.mediator;
 
-import store.common.exception.StoreException;
 import store.common.utils.StoreStringTokenizer;
 import store.order.domain.*;
 import store.order.service.CartService;
@@ -54,11 +53,11 @@ public class StoreMediator {
         String result = start();
         while (true) {
             if ("Y".equalsIgnoreCase(result)) {
-                start();  // 장바구니 초기화
-                continue;  // 반복문 계속
+                start();
+                continue;
             }
             if ("N".equalsIgnoreCase(result)) {
-                break;  // "N" 입력 시 종료
+                break;
             }
         }
     }

@@ -19,11 +19,7 @@ public class Payment {
         this.totalAmount = calculateTotalAmount(cart);
         calculatePromotionDiscountAmount(promotionalProductList);
         calculateMembershipDiscountAmount(cart, checkMembership);
-        System.out.println("total Amount: "+totalAmount);
-        System.out.println("promotionDiscountAmount: "+promotionDiscountAmount);
-        System.out.println("membershipDiscountAmount: "+membershipDiscountAmount);
         this.finalAmountDue = totalAmount - promotionDiscountAmount - membershipDiscountAmount;
-        System.out.println("finalAmountDue: "+finalAmountDue);
     }
 
     public Payment(Integer totalAmount, Integer promotionDiscountAmount, Integer membershipDiscountAmount) {
@@ -89,11 +85,10 @@ public class Payment {
     private Integer separateNonPromotionalProduct(Cart cart) {
         int nonPromotionalProductAmount = 0;
         for (CartItem cartItem : cart.getCartItemList()) {
-            if(!cartItem.isPromotion()){
+            if (!cartItem.isPromotion()) {
                 nonPromotionalProductAmount += cartItem.getProduct().getPrice() * cartItem.getQuantity();
             }
         }
-        System.out.println("총 비프로모션 금액은: "+nonPromotionalProductAmount);
         return nonPromotionalProductAmount;
     }
 
