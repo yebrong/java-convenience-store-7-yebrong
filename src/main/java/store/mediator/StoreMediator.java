@@ -52,7 +52,6 @@ public class StoreMediator {
     }
     public void run(){
         String result = start();
-
         while (true) {
             if ("Y".equalsIgnoreCase(result)) {
                 start();  // 장바구니 초기화
@@ -61,11 +60,7 @@ public class StoreMediator {
             if ("N".equalsIgnoreCase(result)) {
                 break;  // "N" 입력 시 종료
             }
-            if(!"Y".equalsIgnoreCase(result) || !"N".equalsIgnoreCase(result)){
-                throw new IllegalArgumentException(StoreException.INVALID_ORDER_FORMAT.getMessage());
-            }
         }
-
     }
 
 
@@ -75,25 +70,47 @@ public class StoreMediator {
 
     private Map<String, Object> applyPromotionToCart(Cart cart) {
         Map<String, Object> result = new HashMap<>();
-        List<PromotionalProduct> promotionalProductList = new ArrayList<>();
-        for(CartItem cartItem : cart.getCartItemList()){
-            if(cartItem.isPromotion()){
-                int promotionCount = promotionApplication(cartItem);
-                PromotionalProduct promotionalProduct = addPromotionToCart(cartItem.getProduct(),promotionCount);
-                promotionalProductList.add(promotionalProduct);
-            }
+        List<PromotionalProduct> promotionalProductList = processPromotions(cart);
 
-            if(!cartItem.isPromotion()){
-                promotionNonApplication(cartItem);
-            }
-        }
-        Order order =  new Order(cart, promotionalProductList);
-        String checkMembership = InputView.inputMembershipCheck();
-        Payment payment = new Payment(cart, promotionalProductList, checkMembership);
+        Order order = createOrder(cart, promotionalProductList);
+        Payment payment = createPayment(cart, promotionalProductList);
+
         result.put("order", order);
         result.put("payment", payment);
         return result;
     }
+
+    private List<PromotionalProduct> processPromotions(Cart cart) {
+        List<PromotionalProduct> promotionalProductList = new ArrayList<>();
+        for (CartItem cartItem : cart.getCartItemList()) {
+            if (cartItem.isPromotion()) {
+                promotionalProductList.add(applyPromotion(cartItem));
+            } else {
+                handleNonPromotionalItem(cartItem);
+            }
+        }
+        return promotionalProductList;
+    }
+
+    private PromotionalProduct applyPromotion(CartItem cartItem) {
+        int promotionCount = promotionApplication(cartItem);
+        return addPromotionToCart(cartItem.getProduct(), promotionCount);
+    }
+
+    private void handleNonPromotionalItem(CartItem cartItem) {
+        promotionNonApplication(cartItem);
+    }
+
+    private Order createOrder(Cart cart, List<PromotionalProduct> promotionalProductList) {
+        return new Order(cart, promotionalProductList);
+    }
+
+    private Payment createPayment(Cart cart, List<PromotionalProduct> promotionalProductList) {
+        String checkMembership = InputView.inputMembershipCheck();
+        return new Payment(cart, promotionalProductList, checkMembership);
+    }
+
+
 
     private void addCartItemList(Cart cart, String input){
         List<Map<String,Object>> mapList = StoreStringTokenizer.getListOfPurchaseItemList(input);
