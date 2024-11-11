@@ -26,24 +26,6 @@ public class StoreMediator {
         promotionController = new PromotionController();
     }
 
-    public void run(){
-        String result = start();
-
-        while (true) {
-            if ("Y".equalsIgnoreCase(result)) {
-                start();  // 장바구니 초기화
-                continue;  // 반복문 계속
-            }
-            if ("N".equalsIgnoreCase(result)) {
-                break;  // "N" 입력 시 종료
-            }
-            if(!"Y".equalsIgnoreCase(result) || !"N".equalsIgnoreCase(result)){
-                throw new IllegalArgumentException(StoreException.INVALID_ORDER_FORMAT.getMessage());
-            }
-        }
-
-    }
-
     private String start(){
         Cart cart = new Cart();
         while (true) {
@@ -66,6 +48,24 @@ public class StoreMediator {
         String tryOrder = InputView.checkTryOrder(products);
         return tryOrder;
     }
+    public void run(){
+        String result = start();
+
+        while (true) {
+            if ("Y".equalsIgnoreCase(result)) {
+                start();  // 장바구니 초기화
+                continue;  // 반복문 계속
+            }
+            if ("N".equalsIgnoreCase(result)) {
+                break;  // "N" 입력 시 종료
+            }
+            if(!"Y".equalsIgnoreCase(result) || !"N".equalsIgnoreCase(result)){
+                throw new IllegalArgumentException(StoreException.INVALID_ORDER_FORMAT.getMessage());
+            }
+        }
+
+    }
+
 
     private List<Product> storeInitialize(){
         return StoreStringTokenizer.loadProductsFromFile(filePath);
