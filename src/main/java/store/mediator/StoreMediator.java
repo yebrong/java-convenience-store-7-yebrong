@@ -30,23 +30,25 @@ public class StoreMediator {
         Cart cart = new Cart();
         while (true) {
             try {
-                String input = InputView.welcomeMessage(products);
-                addCartItemList(cart, input);
+                requestProduct(cart);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
-        Map<String, Object> result = applyPromotionToCart(cart);
+       return printReceiptResult(applyPromotionToCart(cart));
+    }
 
+    private void requestProduct(Cart cart) {
+        String input = InputView.welcomeMessage(products);
+        addCartItemList(cart, input);
+    }
+    private String printReceiptResult(Map<String, Object> result) {
         Order order = (Order) result.get("order");
         Payment payment = (Payment) result.get("payment");
 
         OutputView.printReceipt(order, payment);
-
-        // "Y" 입력받으면 다시 상품 추가
-        String tryOrder = InputView.checkTryOrder(products);
-        return tryOrder;
+        return InputView.checkTryOrder(products);
     }
     public void run(){
         String result = start();
