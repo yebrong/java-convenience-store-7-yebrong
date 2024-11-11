@@ -14,4 +14,8 @@ public class Cart {
         return cartItemList;
     }
 
+    public String getCartItemListToString(){
+        return cartItemList.toString();
+    }
+
 }

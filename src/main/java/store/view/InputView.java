@@ -3,6 +3,7 @@ package store.view;
 import camp.nextstep.edu.missionutils.Console;
 import store.order.domain.CartItem;
 import store.product.domain.Product;
+import store.promotion.domain.Promotion;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class InputView {
 
     public static String inputMembershipCheck() {
         System.out.println(CHECK_MEMBERSHIP_MESSAGE);
-        return Console.readLine().strip();
+        return Console.readLine();
     }
 
     public static String welcomeMessage(List<Product> list){
@@ -33,11 +34,11 @@ public class InputView {
     }
 
     public static String inputProductName() {
-        return Console.readLine().strip();
+        return Console.readLine();
     }
 
     public static String inputQuantity() {
-        return Console.readLine().strip();
+        return Console.readLine();
     }
 
     private static void printLine(){
@@ -46,7 +47,7 @@ public class InputView {
 
     private static String inputString(String message){
         System.out.println(message);
-        return Console.readLine().strip();
+        return Console.readLine();
     }
 
     private static void customProduct(Product product) {
@@ -68,7 +69,7 @@ public class InputView {
         if (product.getStock() == 0) {
             return OUT_OF_STOCK;
         }
-        return String.valueOf(product.getStock()).strip();
+        return String.valueOf(product.getStock());
     }
 
 
@@ -77,7 +78,7 @@ public class InputView {
         System.out.printf(FREE_PROMOTION_OFFER,
                 product.getName(),
                 count);
-        return Console.readLine().strip();
+        return Console.readLine();
     }
 
 
@@ -85,12 +86,12 @@ public class InputView {
         System.out.printf(NO_DISCOUNT_WARNING,
                 cartItem.getName(),
                 cartItem.getQuantity());
-        return Console.readLine().strip();
+        return Console.readLine();
     }
 
     public static String checkTryOrder(List<Product> productList) {
         System.out.println(IS_MORE_PURCHASE_MESSAGE);
-        return Console.readLine().strip();
+        return Console.readLine();
     }
 
 }

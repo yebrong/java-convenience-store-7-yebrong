@@ -34,6 +34,7 @@ public class Product {
     }
 
     public void reduce(int count){
-            stock -= count;
+        stock -= count;
     }
+
 }

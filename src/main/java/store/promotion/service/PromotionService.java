@@ -11,11 +11,7 @@ public class PromotionService {
 
     public boolean addFreeProduct(CartItem cartItem, Promotion promotion) {
         int totalQuantity = cartItem.getQuantity();
-        int promotionalProducts = calculateNumberOfPromotionalProducts(cartItem, promotion);
-        if (totalQuantity >= promotion.getBuy()) {
-            return promotionalProducts > 0;
-        }
-        return false;
+        return totalQuantity - promotion.getBuy() - calculateNumberOfPromotionalProducts(cartItem, promotion) < 0;
     }
 
     public Promotion checkPromotion(Product product){
