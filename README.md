@@ -217,67 +217,53 @@ src
 ### product (재고)
 #### controller
 #### domain
-- [ ] Product (상품 이름, 가격, 개수, 소유 프로모션)
-- [ ] Product Manager (보류)
+- [x] Product (상품 이름, 가격, 개수, 소유 프로모션)
+- 
 
 #### service
-- [ ] Product Service
-  - [ ] 새로운 제품 등록
-  - [ ] 상품의 가격 변경
-  - [ ] 상품의 구매 재고 차감
-  - [ ] 상품의 프로모션 변경
-  - [ ] 상품의 무료 재고 차감 (프로모션 소유 여부, 프로모션 적용 횟수)
-  - [ ] 최신 정보를 담고 있는 상품 목록 가져오기
+- [x] Product Service
+  - [x] 상품의 구매 재고 차감
+  - [x] 상품의 무료 재고 차감 (프로모션 소유 여부, 프로모션 적용 횟수)
+  - [x] 최신 정보를 담고 있는 상품 목록 가져오기
 #### repository
-- [ ] Product repository
-  - [ ] 상품 찾아서 반환
+- [x] Product repository
+  - [x] 상품 찾아서 반환
 
 ### promotion (프로모션)
 #### controller
-- [ ] 할인 적용
+- [x] 할인 적용
 
 #### domain
-- [ ] Promotion (ENUM 처리, 프로모션 코드, 프로모션 적용 내용(메소드 이름 넣어 보자), 프로모션 시작일, 프로모션 종료일)
+- [x] Promotion (ENUM 처리, 프로모션 코드, 프로모션 적용 내용(메소드 이름 넣어 보자), 프로모션 시작일, 프로모션 종료일)
 
 #### service
-- [ ] Promotion Service
-  - [ ] 오늘이 프로모션 기간에 포함되는지 확인 boolean
-  - [ ] 해당 상품에 프로모션이 몇 번 적용되는지 return int
+- [x] Promotion Service
+  - [x] 오늘이 프로모션 기간에 포함되는지 확인 boolean
+  - [x] 해당 상품에 프로모션이 몇 번 적용되는지 return int
 
-#### repository
-- [ ] Promotion Repository
-  - [ ] 프로모션 존재 찾기
-  - [ ] 프로모션 시작일 찾기
-  - [ ] 프로모션 종료일 찾기
-
-#### exception
-- [ ] Promotion Exception
-  - [ ] 프로모션 재고 부족으로 일반 재고 안내
-  - [ ] 프로모션 재고 수량보다 적게 가져왔을 경우 더 준다고 안내
-  - [ ] 포로모션 재고 부족으로 혜택 없이 결제 고지 안내
 
 ### membership (멤버십)
-#### controller
-- [ ] 멤버십 적용
 
 #### domain
-- [ ] Membership (멤버십 한도 8000, 멤버십 할인율 30%)
+- [x] Membership (멤버십 한도 8000, 멤버십 할인율 30%)
 
 #### service
-- [ ] Membership Service
-  - [ ] 멤버십 적용 여부 확인 (private boolean)
-  - [ ] 멤버십 할인 금액 계산
-  - [ ] 멤버십 할인 금액이 8000원 이상일 경우 8000원만 적용
+- [x] Membership Service
+  - [x] 멤버십 적용 여부 확인 (private boolean)
+  - [x] 멤버십 할인 금액 계산
+  - [x] 멤버십 할인 금액이 8000원 이상일 경우 8000원만 적용
 
 ### order (구매)
 #### controller
-- [ ] 상품 담기
-- [ ] 결제
+- [x] 상품 담기
+- [x] 결제
 
 #### domain
-- [ ] Order
-- [ ] Cart (List< Product > 상품들, 주문 전 상태)
-- [ ] Promotional Product (증정품으로 이름, 가격, 개수, 프로모션 적용)
-- [ ] Payment (결제 관련 정보)
+- [x] Order
+- [x] Cart (List< Product > 상품들, 주문 전 상태)
+- [x] CartItem
+- [x] Promotional Product (증정품으로 이름, 가격, 개수, 프로모션 적용)
+- [x] Payment (결제 관련 정보)
 
 #### service
+- [x] CartService
