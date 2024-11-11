@@ -56,10 +56,6 @@ public class Payment {
         return totalAmount;
     }
 
-    // 카트의 카트 리스트를 순환하면서 isPromotion이 아닌 cartItem들만 모아서 반환
-    // 해당 cartItem에 담긴 것들의 총 금액을 환산하여
-    // 30% 적용 시 할인 금액을 반환하고
-
     private void calculatePromotionDiscountAmount (List<PromotionalProduct> promotionalProductList) {
         if (promotionalProductList != null) {  // Null 체크 추가
             for (PromotionalProduct promotionalProduct : promotionalProductList) {

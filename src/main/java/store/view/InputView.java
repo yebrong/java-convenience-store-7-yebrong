@@ -3,7 +3,6 @@ package store.view;
 import camp.nextstep.edu.missionutils.Console;
 import store.order.domain.CartItem;
 import store.product.domain.Product;
-import store.promotion.domain.Promotion;
 
 import java.util.List;
 import java.util.Optional;

@@ -10,18 +10,6 @@ public class Order {
         this.cart = cart;
     }
 
-//    public Order(Cart cart, boolean isMembership) {
-//        this.cart = cart;
-//        int totalAmount = calculateTotalAmount(cart);
-//        if(isMembership) {
-//            Membership membership = new Membership(cart);
-//            this.payment = new Payment(membership);
-//        }
-//        if(!isMembership) {
-//            this.payment = new Payment();
-//        }
-//    }
-
     public Order(Cart cart, List<PromotionalProduct> promotionalProductList) {
         this.cart = cart;
         this.promotionalProductList = promotionalProductList;

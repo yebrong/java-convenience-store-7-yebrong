@@ -1,7 +1,5 @@
 package store.product.domain;
 
-import store.promotion.domain.Promotion;
-
 public class Product {
     private String name;
     private int price;
