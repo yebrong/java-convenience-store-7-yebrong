@@ -31,12 +31,4 @@ public class CartItem {
         return quantity;
     }
 
-    public boolean activePromotion(){
-        return !isPromotion;
-    }
-
-    @Override
-    public String toString() {
-        return product.getName()+","+product.getPromotionName()+","+quantity+","+isPromotion;
-    }
 }

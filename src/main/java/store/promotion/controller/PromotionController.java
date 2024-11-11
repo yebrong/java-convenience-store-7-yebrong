@@ -13,24 +13,33 @@ public class PromotionController {
         this.promotionService = new PromotionService();
     }
 
-    public Integer run(CartItem cartItem){
+    public Integer run(CartItem cartItem) {
         Product product = cartItem.getProduct();
-        int quantity = cartItem.getQuantity();
         Promotion promotion = promotionService.checkPromotion(product);
-    int count = promotionService.calculateNumberOfPromotionalProducts(cartItem, promotion);
-        if(count != 0 && cartItem.isPromotion()){
+        int count = promotionService.calculateNumberOfPromotionalProducts(cartItem, promotion);
+
+        // 프로모션이 적용될 수 있는 경우
+        if (count != 0 && cartItem.isPromotion()) {
             String answer = InputView.infoPromotion(product, count);
-            if(answer.equals("Y")){
-                if(!promotionService.addFreeProduct(cartItem, promotion)){
-                    InputView.paymentWithoutBenefits(cartItem);
+
+            // 'Y'가 눌렸을 때, 무료 상품을 추가하고 프로모션 혜택 적용
+            if ("Y".equals(answer)) {
+                if (promotionService.addFreeProduct(cartItem, promotion)) {
+                    return count; // 무료 상품이 추가되었으면 그 개수를 반환
+                } else {
+                    InputView.paymentWithoutBenefits(cartItem); // 혜택 없이 결제할 경우 처리
                     return 0;
                 }
-                return count;
             }
-            if(answer.equals("N")){
+
+            // 'N'이 눌렸을 때 프로모션을 적용하지 않겠다는 선택
+            if ("N".equals(answer)) {
                 return 0;
             }
         }
+
+        // 프로모션 혜택이 적용되지 않거나, 기타 조건일 경우
+        InputView.paymentWithoutBenefits(cartItem);
         return 0;
     }
 }

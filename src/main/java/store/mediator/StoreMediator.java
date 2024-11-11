@@ -44,26 +44,25 @@ public class StoreMediator {
 
         OutputView.printReceipt(order, payment);
 
-        // "Y" 입력받으면 다시 상품 추가
         String tryOrder = InputView.checkTryOrder(products);
         return tryOrder;
     }
     public void run(){
        String result = start();
+        retryStoreMediator(result);
 
+    }
+
+    public void retryStoreMediator(String result) {
         while (true) {
             if ("Y".equalsIgnoreCase(result)) {
-                start();  // 장바구니 초기화
-                continue;  // 반복문 계속
+                start();
+                continue;
             }
             if ("N".equalsIgnoreCase(result)) {
-                break;  // "N" 입력 시 종료
-            }
-            if(!"Y".equalsIgnoreCase(result) || !"N".equalsIgnoreCase(result)){
-                throw new IllegalArgumentException(StoreException.INVALID_ORDER_FORMAT.getMessage());
+                break;
             }
         }
-
     }
 
 
@@ -73,25 +72,36 @@ public class StoreMediator {
 
     private Map<String, Object> applyPromotionToCart(Cart cart) {
         Map<String, Object> result = new HashMap<>();
-        List<PromotionalProduct> promotionalProductList = new ArrayList<>();
-        for(CartItem cartItem : cart.getCartItemList()){
-            if(cartItem.isPromotion()){
-                int promotionCount = promotionApplication(cartItem);
-                PromotionalProduct promotionalProduct = addPromotionToCart(cartItem.getProduct(),promotionCount);
-                promotionalProductList.add(promotionalProduct);
-            }
-
-            if(!cartItem.isPromotion()){
-                promotionNonApplication(cartItem);
-            }
-        }
-        Order order =  new Order(cart, promotionalProductList);
-        String checkMembership = InputView.inputMembershipCheck();
-        Payment payment = new Payment(cart, promotionalProductList, checkMembership);
+        List<PromotionalProduct> promotionalProductList = applyPromotionsToCartItems(cart.getCartItemList());
+        Order order = createOrder(cart, promotionalProductList);
+        Payment payment = createPayment(cart, promotionalProductList);
         result.put("order", order);
         result.put("payment", payment);
         return result;
     }
+
+    private List<PromotionalProduct> applyPromotionsToCartItems(List<CartItem> cartItemList) {
+        List<PromotionalProduct> promotionalProductList = new ArrayList<>();
+        for (CartItem cartItem : cartItemList) {
+            if (cartItem.isPromotion()) {
+                int promotionCount = promotionApplication(cartItem);
+                PromotionalProduct promotionalProduct = addPromotionToCart(cartItem.getProduct(), promotionCount);
+                promotionalProductList.add(promotionalProduct);
+            }
+                promotionNonApplication(cartItem);
+        }
+        return promotionalProductList;
+    }
+
+    private Order createOrder(Cart cart, List<PromotionalProduct> promotionalProductList) {
+        return new Order(cart, promotionalProductList);
+    }
+
+    private Payment createPayment(Cart cart, List<PromotionalProduct> promotionalProductList) {
+        String checkMembership = InputView.inputMembershipCheck();
+        return new Payment(cart, promotionalProductList, checkMembership);
+    }
+
 
     private void addCartItemList(Cart cart, String input){
         List<Map<String,Object>> mapList = StoreStringTokenizer.getListOfPurchaseItemList(input);
@@ -110,21 +120,15 @@ public class StoreMediator {
     }
 
     private Integer inputQuantity(Product product, Object quantityObject) {
-        System.out.println("5");
-            try {
-                int quantity = Integer.parseInt(quantityObject.toString());
-                if(productService.isQuantitySufficient(product,quantity)){
-                    return quantity;
-                }
-            } catch (NullPointerException e) {
-                System.out.println(e.getMessage());
-                return null;
-            }
+        try {
+            int quantity = Integer.parseInt(quantityObject.toString());
+            return productService.isQuantitySufficient(product, quantity) ? quantity : null;
+        } catch (Exception e) {
             return null;
+        }
     }
 
     private Product inputProductName(Object productNameObject) {
-        System.out.println("6");
             try {
                 return productService.findByNameFromList(productNameObject.toString());
             } catch (NullPointerException e) {
@@ -139,7 +143,6 @@ public class StoreMediator {
         product.reduce(cartItem.getQuantity());
         productService.deductProductQuantity(product,promotionCount);
         return promotionCount;
-
     }
 
     private PromotionalProduct addPromotionToCart(Product product, int promotionCount) {
@@ -151,6 +154,5 @@ public class StoreMediator {
         if (product.getStock() >= cartItem.getQuantity()) {
             product.reduce(cartItem.getQuantity());
         }
-
     }
 }

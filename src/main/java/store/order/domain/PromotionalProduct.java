@@ -27,8 +27,4 @@ public class PromotionalProduct {
         return quantity;
     }
 
-    @Override
-    public String toString() {
-        return product.getName()+", "+quantity;
-    }
 }

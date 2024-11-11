@@ -5,8 +5,6 @@ import store.product.domain.Product;
 import java.util.List;
 
 public class ProductRepository {
-
-
     public Product findByName(List<Product> products, String productName) {
         for (Product product : products) {
             if (product.getName().equals(productName)) {
@@ -28,7 +26,4 @@ public class ProductRepository {
         }
         return null;
     }
-
-
-
 }
