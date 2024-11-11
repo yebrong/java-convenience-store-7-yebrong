@@ -20,7 +20,7 @@ public class InputView {
 
     public static String inputMembershipCheck() {
         System.out.println(CHECK_MEMBERSHIP_MESSAGE);
-        return Console.readLine();
+        return Console.readLine().strip();
     }
 
     public static String welcomeMessage(List<Product> list){
@@ -33,11 +33,11 @@ public class InputView {
     }
 
     public static String inputProductName() {
-        return Console.readLine();
+        return Console.readLine().strip();
     }
 
     public static String inputQuantity() {
-        return Console.readLine();
+        return Console.readLine().strip();
     }
 
     private static void printLine(){
@@ -46,7 +46,7 @@ public class InputView {
 
     private static String inputString(String message){
         System.out.println(message);
-        return Console.readLine();
+        return Console.readLine().strip();
     }
 
     private static void customProduct(Product product) {
@@ -68,7 +68,7 @@ public class InputView {
         if (product.getStock() == 0) {
             return OUT_OF_STOCK;
         }
-        return String.valueOf(product.getStock());
+        return String.valueOf(product.getStock()).strip();
     }
 
 
@@ -77,7 +77,7 @@ public class InputView {
         System.out.printf(FREE_PROMOTION_OFFER,
                 product.getName(),
                 count);
-        return Console.readLine();
+        return Console.readLine().strip();
     }
 
 
@@ -85,12 +85,12 @@ public class InputView {
         System.out.printf(NO_DISCOUNT_WARNING,
                 cartItem.getName(),
                 cartItem.getQuantity());
-        return Console.readLine();
+        return Console.readLine().strip();
     }
 
     public static String checkTryOrder(List<Product> productList) {
         System.out.println(IS_MORE_PURCHASE_MESSAGE);
-        return Console.readLine();
+        return Console.readLine().strip();
     }
 
 }
