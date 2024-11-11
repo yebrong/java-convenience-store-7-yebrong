@@ -1,5 +1,6 @@
 package store.mediator;
 
+import store.common.exception.StoreException;
 import store.common.utils.StoreStringTokenizer;
 import store.order.domain.*;
 import store.order.service.CartService;
@@ -57,6 +58,9 @@ public class StoreMediator {
             }
             if ("N".equalsIgnoreCase(result)) {
                 break;  // "N" 입력 시 종료
+            }
+            if(!"Y".equalsIgnoreCase(result) || !"N".equalsIgnoreCase(result)){
+                throw new IllegalArgumentException(StoreException.INVALID_ORDER_FORMAT.getMessage());
             }
         }
 
